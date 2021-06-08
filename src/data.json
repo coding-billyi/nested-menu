@@ -1,0 +1,113 @@
+{
+  "menus": [
+    {
+      "title": "Button 1",
+      "id": "cOU4uQ",
+      "parent_id": null,
+      "form": null,
+      "children": [
+        {
+          "title": "Level 2 / Sub Button 1",
+          "id": "xawMCU",
+          "parent_id": "cOU4uQ",
+          "form": null,
+          "children": []
+        },
+        {
+          "title": "Level 2 / Sub Button 2",
+          "id": "mpjxjH",
+          "parent_id": "cOU4uQ",
+          "form": {
+            "title": "Form 1",
+            "id": "jojEAk",
+            "parent_id": "mpjxjH",
+            "endpoint": "https://mocki.io/v1/44140a65-e300-4b44-a66d-4ab086160231",
+            "fields": {
+              "firstName": {
+                "label": "First Name",
+                "type": "text"
+              },
+              "lastName": {
+                "label": "Last Name",
+                "type": "text"
+              }
+            }
+          },
+          "children": []
+        },
+        {
+          "title": "Level 2 / Sub Button 3",
+          "id": "_55tO4",
+          "parent_id": "cOU4uQ",
+          "form": null,
+          "children": [
+            {
+              "title": "Level 3 / Sub Button 1",
+              "id": "w66QQv",
+              "parent_id": "_55tO4",
+              "form": null,
+              "children": []
+            },
+            {
+              "title": "Level 3 / Sub Button 2",
+              "id": "Mi1wlx",
+              "parent_id": "_55tO4",
+              "form": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Button 2",
+      "id": "afV5Z9",
+      "parent_id": null,
+      "form": null,
+      "children": []
+    },
+    {
+      "title": "Button 3",
+      "id": "dq170v",
+      "parent_id": null,
+      "form": null,
+      "children": []
+    },
+    {
+      "title": "Button 4",
+      "id": "ZTSTrW",
+      "parent_id": null,
+      "form": null,
+      "children": []
+    },
+    {
+      "title": "Button 5",
+      "id": "1XucuC",
+      "parent_id": null,
+      "form": null,
+      "children": []
+    },
+    {
+      "title": "Button 6",
+      "id": "yY1Fen",
+      "parent_id": null,
+      "form": {
+        "title": "Form 2",
+        "id": "gBnuVo",
+        "parent_id": "yY1Fen",
+        "endpoint": "https://mocki.io/v1/44140a65-e300-4b44-a66d-4ab086160231",
+        "fields": {
+          "email": {
+            "label": "Email Address",
+            "type": "email"
+          },
+          "password": {
+            "label": "Password",
+            "type": "password"
+          }
+        }
+      },
+      "children": []
+    }
+  ]
+}
