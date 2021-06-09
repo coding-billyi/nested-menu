@@ -6,7 +6,7 @@ import {
 import { Button } from './MenusStyles';
 import { IMenu } from '../../interface/IMenu';
 
-export const Menus = ({ menus }: MenusProps) => (
+export const Menus: React.FC<MenusProps> = ({ menus }) => (
   <MenusProvider>
     <nav>
       <ul role="menu">
@@ -20,7 +20,7 @@ export const Menus = ({ menus }: MenusProps) => (
   </MenusProvider>
 );
 
-const Menu = ({ list, level }: MenuProps) => {
+const Menu: React.FC<MenuProps> = ({ list, level }) => {
   const [{ activePath }, dispatch] = useMenus();
 
   const handleClick = (level: number, id: string) => {
@@ -45,7 +45,7 @@ const Menu = ({ list, level }: MenuProps) => {
   );
 };
 
-const SubMenu = ({ list, level }: MenuProps) => (
+const SubMenu: React.FC<MenuProps> = ({ list, level }) => (
   <ul role="menu" aria-label={list.title}>
     {list.children.map((item) => (
       <li key={item.id} role="menuitem">

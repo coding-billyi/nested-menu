@@ -34,10 +34,9 @@ const initialState = {
   activePath: [],
 };
 
-const MenusContext = React.createContext<[State, React.Dispatch<Actions>]>([
-  initialState,
-  () => {},
-]);
+const MenusContext = React.createContext<
+  [State, React.Dispatch<Actions>] | undefined
+>(undefined);
 MenusContext.displayName = 'MenusContext';
 
 const MenusReducer = (state: State, action: Actions) => {
@@ -77,11 +76,7 @@ const MenusReducer = (state: State, action: Actions) => {
   }
 };
 
-type MenusProviderProps = {
-  children: React.ReactNode;
-};
-
-export const MenusProvider = ({ children }: MenusProviderProps) => {
+export const MenusProvider: React.FC<{}> = ({ children }) => {
   const [state, dispatch] = React.useReducer(MenusReducer, initialState);
 
   return (
@@ -94,7 +89,7 @@ export const MenusProvider = ({ children }: MenusProviderProps) => {
 export const useMenus = () => {
   const context = React.useContext(MenusContext);
 
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useMenus must be used within a MenusProvider');
   }
 
