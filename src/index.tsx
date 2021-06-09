@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'normalize.css';
+import '@reach/dialog/styles.css';
 import { App } from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 
