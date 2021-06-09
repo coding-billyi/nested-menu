@@ -25,7 +25,7 @@ type Payload = {
     level: number;
     id: string;
   };
-  [MenusActionTypes.Cancel]: {};
+  [MenusActionTypes.Cancel]: undefined;
 };
 
 type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
