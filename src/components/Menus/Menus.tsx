@@ -5,6 +5,8 @@ import {
 } from '../../providers/MenusProvider';
 import { Button } from './MenusStyles';
 import { IMenu } from '../../interface/IMenu';
+import { Modal, ModalContent, ModalOpenButton } from '../Modal/Modal';
+import { Form } from '../Form/Form';
 
 export const Menus: React.FC<MenusProps> = ({ menus }) => (
   <MenusProvider>
@@ -30,18 +32,54 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
   const isActive = activePath.includes(list.id);
   const hasChild = list.children.length > 0;
 
+  if (hasChild) {
+    return (
+      <>
+        <Button
+          aria-haspopup="menu"
+          onClick={() => handleClick(level, list.id)}
+          isActive={isActive}
+        >
+          {list.title}
+        </Button>
+        {isActive ? <SubMenu list={list} level={level} /> : null}
+      </>
+    );
+  }
+
+  if (list.form) {
+    return (
+      <Modal>
+        <ModalOpenButton>
+          <Button
+            type="button"
+            aria-haspopup={hasChild ? 'menu' : 'dialog'}
+            onClick={() => handleClick(level, list.id)}
+            isActive={isActive}
+          >
+            {list.title}
+          </Button>
+        </ModalOpenButton>
+        <ModalContent>
+          <Form form={list.form} />
+        </ModalContent>
+      </Modal>
+    );
+  }
+
   return (
-    <>
-      <Button
-        type="button"
-        aria-haspopup={hasChild ? 'menu' : 'dialog'}
-        onClick={() => handleClick(level, list.id)}
-        isActive={isActive}
-      >
-        {list.title}
-      </Button>
-      {isActive && hasChild ? <SubMenu list={list} level={level} /> : null}
-    </>
+    <Modal>
+      <ModalOpenButton>
+        <Button
+          type="button"
+          aria-haspopup={hasChild ? 'menu' : 'dialog'}
+          onClick={() => handleClick(level, list.id)}
+          isActive={isActive}
+        >
+          {list.title}
+        </Button>
+      </ModalOpenButton>
+    </Modal>
   );
 };
 
