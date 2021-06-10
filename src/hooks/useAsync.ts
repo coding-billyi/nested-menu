@@ -55,6 +55,9 @@ function useAsync() {
   );
 
   return {
+    isPending: status === 'pending',
+    isResolved: status === 'resolved',
+    isRejected: status === 'rejected',
     error,
     status,
     data,
