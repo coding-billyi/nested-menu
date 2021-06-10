@@ -76,7 +76,7 @@ const MenusReducer = (state: State, action: Actions) => {
   }
 };
 
-export const MenusProvider: React.FC<{}> = ({ children }) => {
+export const MenusProvider: React.FC = ({ children }) => {
   const [state, dispatch] = React.useReducer(MenusReducer, initialState);
 
   return (
