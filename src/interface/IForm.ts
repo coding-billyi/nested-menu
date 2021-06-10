@@ -1,14 +1,14 @@
-type Field = {
-  label: string;
-  type: string;
-};
+export interface IFields {
+  [field: string]: {
+    label: string;
+    type: string;
+  };
+}
 
 export interface IForm {
   title: string;
   id: string;
   parent_id: string;
   endpoint: string;
-  fields: {
-    [field: string]: Field;
-  };
+  fields: IFields;
 }
