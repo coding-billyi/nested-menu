@@ -60,7 +60,7 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
             {list.title}
           </Button>
         </ModalOpenButton>
-        <ModalContent>
+        <ModalContent aria-label={list.title}>
           <Form form={list.form} />
         </ModalContent>
       </Modal>

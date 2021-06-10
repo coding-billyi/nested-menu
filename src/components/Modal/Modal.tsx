@@ -50,11 +50,9 @@ export const ModalOpenButton: React.FC<{}> = ({ children: child }) => {
   }
 };
 
-export const ModalContent: React.FC<{}> = ({ children }) => {
+export const ModalContent: React.FC<{}> = (props) => {
   const { isOpen, setIsOpen } = React.useContext(ModalContext);
   return (
-    <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)}>
-      {children}
-    </Dialog>
+    <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} {...props} />
   );
 };
