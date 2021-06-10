@@ -27,8 +27,7 @@ export const Form: React.FC<FormProps> = ({ form }) => {
   };
   return (
     <>
-      <h2 id={`form-${id}`}>{title}</h2>
-      <form aria-labelledby={`form-${id}`} onSubmit={handleSubmit}>
+      <form aria-label={title} onSubmit={handleSubmit}>
         {Object.keys(fields).map((key) => {
           const { label, type } = fields[key];
           return (

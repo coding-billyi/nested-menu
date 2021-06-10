@@ -60,7 +60,7 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
             {list.title}
           </Button>
         </ModalOpenButton>
-        <ModalContent aria-label={list.title}>
+        <ModalContent title={list.form.title} aria-label={list.form.title}>
           <Form form={list.form} />
         </ModalContent>
       </Modal>
@@ -79,6 +79,11 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
           {list.title}
         </Button>
       </ModalOpenButton>
+      <ModalContent title={'Error'} aria-label={'error'}>
+        <span>
+          This hasn't been implemented yet. Please try another menu item
+        </span>
+      </ModalContent>
     </Modal>
   );
 };

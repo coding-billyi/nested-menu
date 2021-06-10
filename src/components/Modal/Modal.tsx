@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Dialog } from '@reach/dialog';
+import VisuallyHidden from '@reach/visually-hidden';
+import { GrFormClose } from 'react-icons/gr';
+import { Dialog, Close, CloseButton, Title } from './ModalStyles';
 
-type ModalContextValue = {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+const callAll =
+  (...fns: Function[]) =>
+  (...args: unknown[]) =>
+    fns.forEach((fn) => fn && fn(...args));
 
 const ModalContext = React.createContext<ModalContextValue>({
   isOpen: false,
@@ -27,10 +29,7 @@ export const ModalDismissButton: React.FC = ({ children: child }) => {
     return null;
   } else {
     return React.cloneElement(child, {
-      onClick: () => {
-        setIsOpen(false);
-        child.props.onClick();
-      },
+      onClick: callAll(() => setIsOpen(false), child.props.onClick),
     });
   }
 };
@@ -42,17 +41,44 @@ export const ModalOpenButton: React.FC = ({ children: child }) => {
     return null;
   } else {
     return React.cloneElement(child, {
-      onClick: () => {
-        setIsOpen(true);
-        child.props.onClick();
-      },
+      onClick: callAll(() => setIsOpen(true), child.props.onClick),
     });
   }
 };
 
-export const ModalContent: React.FC = (props) => {
+export const ModalContentBase: React.FC = (props) => {
   const { isOpen, setIsOpen } = React.useContext(ModalContext);
   return (
     <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} {...props} />
   );
+};
+
+export const ModalContent: React.FC<ModalContentProps> = ({
+  title,
+  children,
+  ...props
+}) => (
+  <ModalContentBase {...props}>
+    <Close>
+      <ModalDismissButton>
+        <CloseButton>
+          <VisuallyHidden>Close</VisuallyHidden>
+          <span aria-hidden>
+            <GrFormClose />
+          </span>
+        </CloseButton>
+      </ModalDismissButton>
+    </Close>
+    <Title>{title}</Title>
+    {children}
+  </ModalContentBase>
+);
+
+type ModalContextValue = {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+type ModalContentProps = {
+  title: string;
 };
