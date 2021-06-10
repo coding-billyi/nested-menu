@@ -26,5 +26,5 @@ export const Message = styled.span<MessageProps>`
 `;
 
 type MessageProps = {
-  error: boolean;
+  error?: boolean;
 };
