@@ -3,7 +3,7 @@ import {
   useMenus,
   MenusActionTypes,
 } from '../../providers/MenusProvider';
-import { Button } from './MenusStyles';
+import { Button, SubMenuUl } from './MenusStyles';
 import { IMenu } from '../../interface/IMenu';
 import { Modal, ModalContent, ModalOpenButton } from '../Modal/Modal';
 import { Form } from '../Form/Form';
@@ -52,7 +52,6 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
       <Modal>
         <ModalOpenButton>
           <Button
-            type="button"
             aria-haspopup={hasChild ? 'menu' : 'dialog'}
             onClick={() => handleClick(level, list.id)}
             isActive={isActive}
@@ -71,7 +70,6 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
     <Modal>
       <ModalOpenButton>
         <Button
-          type="button"
           aria-haspopup={hasChild ? 'menu' : 'dialog'}
           onClick={() => handleClick(level, list.id)}
           isActive={isActive}
@@ -89,13 +87,13 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
 };
 
 const SubMenu: React.FC<MenuProps> = ({ list, level }) => (
-  <ul role="menu" aria-label={list.title}>
+  <SubMenuUl role="menu" aria-label={list.title} level={level}>
     {list.children.map((item) => (
       <li key={item.id} role="menuitem">
         <Menu list={item} level={level + 1} />
       </li>
     ))}
-  </ul>
+  </SubMenuUl>
 );
 
 type MenusProps = {

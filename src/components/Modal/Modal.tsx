@@ -2,6 +2,7 @@ import * as React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { GrFormClose } from 'react-icons/gr';
 import { Dialog, Close, CloseButton, Title } from './ModalStyles';
+import { MenusActionTypes, useMenus } from '../../providers/MenusProvider';
 
 const callAll =
   (...fns: Function[]) =>
@@ -48,31 +49,40 @@ export const ModalOpenButton: React.FC = ({ children: child }) => {
 
 export const ModalContentBase: React.FC = (props) => {
   const { isOpen, setIsOpen } = React.useContext(ModalContext);
-  return (
-    <Dialog isOpen={isOpen} onDismiss={() => setIsOpen(false)} {...props} />
-  );
+  const [, dispatch] = useMenus();
+  const handleDismiss = () => {
+    setIsOpen(false);
+    dispatch({ type: MenusActionTypes.Cancel });
+  };
+  return <Dialog isOpen={isOpen} onDismiss={handleDismiss} {...props} />;
 };
 
 export const ModalContent: React.FC<ModalContentProps> = ({
   title,
   children,
   ...props
-}) => (
-  <ModalContentBase {...props}>
-    <Close>
-      <ModalDismissButton>
-        <CloseButton>
-          <VisuallyHidden>Close</VisuallyHidden>
-          <span aria-hidden>
-            <GrFormClose />
-          </span>
-        </CloseButton>
-      </ModalDismissButton>
-    </Close>
-    <Title>{title}</Title>
-    {children}
-  </ModalContentBase>
-);
+}) => {
+  const [, dispatch] = useMenus();
+  const handleClick = () => {
+    dispatch({ type: MenusActionTypes.Cancel });
+  };
+  return (
+    <ModalContentBase {...props}>
+      <Close>
+        <ModalDismissButton>
+          <CloseButton onClick={handleClick}>
+            <VisuallyHidden>Close</VisuallyHidden>
+            <span aria-hidden>
+              <GrFormClose />
+            </span>
+          </CloseButton>
+        </ModalDismissButton>
+      </Close>
+      <Title>{title}</Title>
+      {children}
+    </ModalContentBase>
+  );
+};
 
 type ModalContextValue = {
   isOpen: boolean;

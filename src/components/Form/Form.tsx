@@ -2,12 +2,13 @@ import * as React from 'react';
 import { IForm } from '../../interface/IForm';
 import { MenusActionTypes, useMenus } from '../../providers/MenusProvider';
 import { ModalDismissButton } from '../Modal/Modal';
-import { Label, Input, Button, Message } from './FormStyles';
+import { Label, Input, Message, Spinner, Buttons } from './FormStyles';
+import { Button } from '../Global/Button';
 import { useForm } from './useForm';
 import { useAsync } from '../../hooks/useAsync';
 
 export const Form: React.FC<FormProps> = ({ form }) => {
-  const { id, title, endpoint, fields } = form;
+  const { title, endpoint, fields } = form;
   const { data, handleChange } = useForm(fields);
   const { isPending, isResolved, isRejected, run } = useAsync();
   const [, dispatch] = useMenus();
@@ -15,7 +16,6 @@ export const Form: React.FC<FormProps> = ({ form }) => {
   const handleCancel = () => {
     dispatch({ type: MenusActionTypes.Cancel });
   };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     run(
@@ -42,16 +42,16 @@ export const Form: React.FC<FormProps> = ({ form }) => {
             </Label>
           );
         })}
-        <div>
+        <Buttons>
           <Button type="submit" disabled={isPending}>
-            {isPending ? 'Loading' : 'Submit'}
+            {isPending ? <Spinner /> : 'Submit'}
           </Button>
           <ModalDismissButton>
-            <Button type="button" onClick={handleCancel}>
+            <Button type="button" variant={'secondary'} onClick={handleCancel}>
               Cancel
             </Button>
           </ModalDismissButton>
-        </div>
+        </Buttons>
       </form>
 
       {isResolved && (

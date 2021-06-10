@@ -1,4 +1,6 @@
 import styled from '@emotion/styled/macro';
+import { keyframes } from '@emotion/react/macro';
+import { FaSpinner } from 'react-icons/fa';
 
 export const Label = styled.label`
   margin-bottom: 0.5rem;
@@ -9,14 +11,14 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  display: block;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
 `;
 
-export const Button = styled.button`
-  margin-right: 1rem;
-  &::last-of-type {
-    margin-right: 0;
-  }
+export const Buttons = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1rem;
 `;
 
 export const Message = styled.span<MessageProps>`
@@ -24,6 +26,18 @@ export const Message = styled.span<MessageProps>`
   margin-top: 1rem;
   color: ${({ error }) => (error ? 'red' : 'black')};
 `;
+
+const spin = keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
+});
+
+export const Spinner = styled(FaSpinner)({
+  animation: `${spin} 1s linear infinite`,
+});
+Spinner.defaultProps = {
+  'aria-label': 'loading',
+};
 
 type MessageProps = {
   error?: boolean;

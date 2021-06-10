@@ -1,34 +1,9 @@
 import * as React from 'react';
 
-type ActionMap<M extends { [index: string]: any }> = {
-  [Key in keyof M]: M[Key] extends undefined
-    ? {
-        type: Key;
-      }
-    : {
-        type: Key;
-        payload: M[Key];
-      };
-};
-
 export enum MenusActionTypes {
   Click = 'CLICK',
   Cancel = 'CANCEL',
 }
-
-type State = {
-  activePath: string[];
-};
-
-type Payload = {
-  [MenusActionTypes.Click]: {
-    level: number;
-    id: string;
-  };
-  [MenusActionTypes.Cancel]: undefined;
-};
-
-type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
 
 const initialState = {
   activePath: [],
@@ -95,3 +70,28 @@ export const useMenus = () => {
 
   return context;
 };
+
+type ActionMap<M extends { [index: string]: any }> = {
+  [Key in keyof M]: M[Key] extends undefined
+    ? {
+        type: Key;
+      }
+    : {
+        type: Key;
+        payload: M[Key];
+      };
+};
+
+type State = {
+  activePath: string[];
+};
+
+type Payload = {
+  [MenusActionTypes.Click]: {
+    level: number;
+    id: string;
+  };
+  [MenusActionTypes.Cancel]: undefined;
+};
+
+type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
