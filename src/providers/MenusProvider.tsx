@@ -71,7 +71,7 @@ export const useMenus = () => {
   return context;
 };
 
-type ActionMap<M extends { [index: string]: any }> = {
+type ActionMap<M extends { [index: string]: {} | undefined }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
         type: Key;

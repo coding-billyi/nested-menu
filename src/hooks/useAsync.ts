@@ -1,6 +1,6 @@
 import React from 'react';
 
-function useSafeDispatch(dispatch: React.Dispatch<any>) {
+function useSafeDispatch(dispatch: React.Dispatch<Partial<State>>) {
   const isMounted = React.useRef(false);
   React.useLayoutEffect(() => {
     isMounted.current = true;
@@ -14,24 +14,11 @@ function useSafeDispatch(dispatch: React.Dispatch<any>) {
   );
 }
 
-enum StatusTypes {
-  idle,
-  pending,
-  resolved,
-  rejected,
-}
-
-type State = {
-  status: keyof typeof StatusTypes;
-  data: null | unknown;
-  error: null | unknown;
-};
-
 const initialState: State = { status: 'idle', data: null, error: null };
 
 function useAsync() {
   const [{ status, data, error }, setState] = React.useReducer(
-    (s: State, a: State) => ({ ...s, ...a }),
+    (s: State, a: Partial<State>) => ({ ...s, ...a }),
     initialState,
   );
 
@@ -66,3 +53,16 @@ function useAsync() {
 }
 
 export { useAsync };
+
+enum StatusTypes {
+  idle,
+  pending,
+  resolved,
+  rejected,
+}
+
+type State = {
+  status: keyof typeof StatusTypes;
+  data: null | unknown;
+  error: null | unknown;
+};
