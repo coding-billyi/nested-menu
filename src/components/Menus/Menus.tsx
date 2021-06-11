@@ -29,6 +29,10 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
     dispatch({ type: MenusActionTypes.Click, payload: { level, id } });
   };
 
+  const handleClose = () => {
+    dispatch({ type: MenusActionTypes.Cancel });
+  };
+
   const isActive = activePath.includes(list.id);
   const hasChild = list.children.length > 0;
 
@@ -59,7 +63,11 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
             {list.title}
           </Button>
         </ModalOpenButton>
-        <ModalContent title={list.form.title} aria-label={list.form.title}>
+        <ModalContent
+          title={list.form.title}
+          aria-label={list.form.title}
+          onClose={handleClose}
+        >
           <Form form={list.form} />
         </ModalContent>
       </Modal>
@@ -77,7 +85,7 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
           {list.title}
         </Button>
       </ModalOpenButton>
-      <ModalContent title={'Error'} aria-label={'error'}>
+      <ModalContent title={'Error'} aria-label={'error'} onClose={handleClose}>
         <span>
           This hasn't been implemented yet. Please try another menu item
         </span>

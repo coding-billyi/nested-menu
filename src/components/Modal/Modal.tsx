@@ -2,10 +2,9 @@ import * as React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { GrFormClose } from 'react-icons/gr';
 import { Dialog, Close, CloseButton, Title } from './ModalStyles';
-import { MenusActionTypes, useMenus } from '../../providers/MenusProvider';
 
 const callAll =
-  (...fns: Function[]) =>
+  (...fns: (Function | undefined)[]) =>
   (...args: unknown[]) =>
     fns.forEach((fn) => fn && fn(...args));
 
@@ -47,30 +46,31 @@ export const ModalOpenButton: React.FC = ({ children: child }) => {
   }
 };
 
-export const ModalContentBase: React.FC = (props) => {
-  const { isOpen, setIsOpen } = React.useContext(ModalContext);
-  const [, dispatch] = useMenus();
-  const handleDismiss = () => {
-    setIsOpen(false);
-    dispatch({ type: MenusActionTypes.Cancel });
-  };
-  return <Dialog isOpen={isOpen} onDismiss={handleDismiss} {...props} />;
-};
-
-export const ModalContent: React.FC<ModalContentProps> = ({
-  title,
-  children,
+export const ModalContentBase: React.FC<IModalContentBaseProps> = ({
+  onClose,
   ...props
 }) => {
-  const [, dispatch] = useMenus();
-  const handleClick = () => {
-    dispatch({ type: MenusActionTypes.Cancel });
-  };
+  const { isOpen, setIsOpen } = React.useContext(ModalContext);
   return (
-    <ModalContentBase {...props}>
+    <Dialog
+      isOpen={isOpen}
+      onDismiss={callAll(() => setIsOpen(false), onClose)}
+      {...props}
+    />
+  );
+};
+
+export const ModalContent: React.FC<IModalContentProps> = ({
+  title,
+  children,
+  onClose,
+  ...props
+}) => {
+  return (
+    <ModalContentBase onClose={onClose} {...props}>
       <Close>
         <ModalDismissButton>
-          <CloseButton onClick={handleClick}>
+          <CloseButton onClick={onClose}>
             <VisuallyHidden>Close</VisuallyHidden>
             <span aria-hidden>
               <GrFormClose />
@@ -89,6 +89,10 @@ type ModalContextValue = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type ModalContentProps = {
+interface IModalContentBaseProps {
+  onClose?: () => void;
+}
+
+interface IModalContentProps extends IModalContentBaseProps {
   title: string;
-};
+}
