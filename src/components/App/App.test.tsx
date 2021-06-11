@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { App } from './App';
 
-test('renders title', () => {
-  render(<App />);
-  const titleElement = screen.getByRole('heading');
-  expect(titleElement).toBeInTheDocument();
+describe('<App/>', () => {
+  it('should render title in header', () => {
+    render(<App />);
+    expect(screen.getByRole('heading').textContent).toMatchInlineSnapshot(
+      `"Coding Test"`,
+    );
+  });
 });
