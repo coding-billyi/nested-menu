@@ -1,28 +1,29 @@
 import * as React from 'react';
 import { IForm } from '../../interface/IForm';
-import { MenusActionTypes, useMenus } from '../../providers/MenusProvider';
 import { ModalDismissButton } from '../Modal/Modal';
 import { Label, Input, Message, Spinner, Buttons } from './FormStyles';
 import { Button } from '../Global/Button';
 import { useForm } from './useForm';
 import { useAsync } from '../../hooks/useAsync';
 
-export const Form: React.FC<FormProps> = ({ form }) => {
+export const Form: React.FC<FormProps> = ({ form, onClose }) => {
   const { title, endpoint, fields } = form;
   const { data, handleChange } = useForm(fields);
   const { isPending, isResolved, isRejected, run } = useAsync();
-  const [, dispatch] = useMenus();
 
-  const handleCancel = () => {
-    dispatch({ type: MenusActionTypes.Cancel });
-  };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     run(
       fetch(endpoint, {
         body: JSON.stringify(data),
         method: 'POST',
-      }).then((res) => res.json()),
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText);
+        } else {
+          return res.json();
+        }
+      }),
     );
   };
   return (
@@ -36,7 +37,8 @@ export const Form: React.FC<FormProps> = ({ form }) => {
               <Input
                 id={`${key}-field`}
                 type={type}
-                value={data[key]}
+                //@TODO: issues with dynamic form field testing for controlled form.
+                // value={data[key]}
                 onChange={handleChange(key)}
               />
             </Label>
@@ -47,7 +49,7 @@ export const Form: React.FC<FormProps> = ({ form }) => {
             {isPending ? <Spinner /> : 'Submit'}
           </Button>
           <ModalDismissButton>
-            <Button type="button" variant={'secondary'} onClick={handleCancel}>
+            <Button type="button" variant={'secondary'} onClick={onClose}>
               Cancel
             </Button>
           </ModalDismissButton>
@@ -71,4 +73,5 @@ export const Form: React.FC<FormProps> = ({ form }) => {
 
 type FormProps = {
   form: IForm;
+  onClose: () => void;
 };

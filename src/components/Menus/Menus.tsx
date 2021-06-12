@@ -41,6 +41,8 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
       <>
         <Button
           aria-haspopup="menu"
+          aria-expanded={isActive}
+          aria-controls={list.id}
           onClick={() => handleClick(level, list.id)}
           isActive={isActive}
         >
@@ -56,7 +58,8 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
       <Modal>
         <ModalOpenButton>
           <Button
-            aria-haspopup={hasChild ? 'menu' : 'dialog'}
+            aria-haspopup="dialog"
+            aria-expanded={isActive}
             onClick={() => handleClick(level, list.id)}
             isActive={isActive}
           >
@@ -68,7 +71,7 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
           aria-label={list.form.title}
           onClose={handleClose}
         >
-          <Form form={list.form} />
+          <Form form={list.form} onClose={handleClose} />
         </ModalContent>
       </Modal>
     );
@@ -78,7 +81,8 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
     <Modal>
       <ModalOpenButton>
         <Button
-          aria-haspopup={hasChild ? 'menu' : 'dialog'}
+          aria-haspopup="dialog"
+          aria-expanded={isActive}
           onClick={() => handleClick(level, list.id)}
           isActive={isActive}
         >
@@ -86,18 +90,24 @@ const Menu: React.FC<MenuProps> = ({ list, level }) => {
         </Button>
       </ModalOpenButton>
       <ModalContent title={'Error'} aria-label={'error'} onClose={handleClose}>
-        <span>
-          This hasn't been implemented yet. Please try another menu item
-        </span>
+        <div role="document">
+          <p>This hasn't been implemented yet. Please try another menu item</p>
+        </div>
       </ModalContent>
     </Modal>
   );
 };
 
 const SubMenu: React.FC<MenuProps> = ({ list, level }) => (
-  <SubMenuUl role="menu" aria-label={list.title} level={level}>
+  <SubMenuUl
+    role="menu"
+    data-testid={`submenu-${list.title}`}
+    aria-label={list.title}
+    id={list.id}
+    level={level}
+  >
     {list.children.map((item) => (
-      <li key={item.id} role="menuitem">
+      <li role="menuitem" key={item.id}>
         <Menu list={item} level={level + 1} />
       </li>
     ))}
