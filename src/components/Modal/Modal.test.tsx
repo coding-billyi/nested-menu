@@ -7,7 +7,7 @@ describe('<Modal>', () => {
   it('the modal can be opened/closed', () => {
     const label = 'Modal Label';
     const title = 'Modal Title';
-    render(
+    const { baseElement } = render(
       <Modal>
         <ModalOpenButton>
           <button>Open</button>
@@ -28,8 +28,15 @@ describe('<Modal>', () => {
       withinModal.getByRole('heading', { name: title }),
     ).toBeInTheDocument();
 
+    // close by clicking the close button
     userEvent.click(withinModal.getByRole('button', { name: /close/i }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
+    // close by clicking the overlay
+    userEvent.click(screen.getByRole('button', { name: 'Open' }));
+    userEvent.click(
+      baseElement.querySelector('[data-reach-dialog-overlay]') as Element,
+    );
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });

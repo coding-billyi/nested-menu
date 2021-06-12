@@ -8,10 +8,7 @@ const callAll =
   (...args: unknown[]) =>
     fns.forEach((fn) => fn && fn(...args));
 
-const ModalContext = React.createContext<ModalContextValue>({
-  isOpen: false,
-  setIsOpen: () => null,
-});
+const ModalContext = React.createContext({} as ModalContextValue);
 
 export const Modal: React.FC = ({ children }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -25,6 +22,7 @@ export const Modal: React.FC = ({ children }) => {
 export const ModalDismissButton: React.FC = ({ children: child }) => {
   const { setIsOpen } = React.useContext(ModalContext);
 
+  /* istanbul ignore next */
   if (!React.isValidElement(child)) {
     return null;
   } else {
@@ -36,7 +34,7 @@ export const ModalDismissButton: React.FC = ({ children: child }) => {
 
 export const ModalOpenButton: React.FC = ({ children: child }) => {
   const { setIsOpen } = React.useContext(ModalContext);
-
+  /* istanbul ignore next */
   if (!React.isValidElement(child)) {
     return null;
   } else {

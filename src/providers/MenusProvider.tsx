@@ -9,9 +9,7 @@ const initialState = {
   activePath: [],
 };
 
-const MenusContext = React.createContext<
-  [State, React.Dispatch<Actions>] | undefined
->(undefined);
+const MenusContext = React.createContext({} as MenusContextValue);
 MenusContext.displayName = 'MenusContext';
 
 const MenusReducer = (state: State, action: Actions) => {
@@ -44,7 +42,7 @@ const MenusReducer = (state: State, action: Actions) => {
         activePath: newActivePath,
       };
     }
-
+    /* istanbul ignore next */
     default: {
       throw new Error(`Unhandled action type`);
     }
@@ -55,7 +53,7 @@ export const MenusProvider: React.FC = ({ children }) => {
   const [state, dispatch] = React.useReducer(MenusReducer, initialState);
 
   return (
-    <MenusContext.Provider value={[state, dispatch]}>
+    <MenusContext.Provider value={{ state, dispatch }}>
       {children}
     </MenusContext.Provider>
   );
@@ -63,7 +61,7 @@ export const MenusProvider: React.FC = ({ children }) => {
 
 export const useMenus = () => {
   const context = React.useContext(MenusContext);
-
+  /* istanbul ignore next */
   if (context === undefined) {
     throw new Error('useMenus must be used within a MenusProvider');
   }
@@ -95,3 +93,8 @@ type Payload = {
 };
 
 type Actions = ActionMap<Payload>[keyof ActionMap<Payload>];
+
+type MenusContextValue = {
+  state: State;
+  dispatch: React.Dispatch<Actions>;
+};

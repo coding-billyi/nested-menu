@@ -6,14 +6,10 @@ export const Button = styled(GlobalButton)<ButtonProps>`
   color: ${({ isActive }) => (isActive ? 'red' : 'black')};
 `;
 
-export const SubMenuUl = styled.ul<SubMenuUlProps>`
-  margin-left: ${({ level }) => (level > -1 ? '2rem' : 0)};
+export const SubMenuUl = styled.ul`
+  margin-left: 2rem;
 `;
 
 type ButtonProps = {
   isActive: boolean;
-};
-
-type SubMenuUlProps = {
-  level: number;
 };

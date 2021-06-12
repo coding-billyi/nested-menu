@@ -23,7 +23,10 @@ export const Menus: React.FC<MenusProps> = ({ menus }) => (
 );
 
 const Menu: React.FC<MenuProps> = ({ list, level }) => {
-  const [{ activePath }, dispatch] = useMenus();
+  const {
+    state: { activePath },
+    dispatch,
+  } = useMenus();
 
   const handleClick = (level: number, id: string) => {
     dispatch({ type: MenusActionTypes.Click, payload: { level, id } });
@@ -104,7 +107,6 @@ const SubMenu: React.FC<MenuProps> = ({ list, level }) => (
     data-testid={`submenu-${list.title}`}
     aria-label={list.title}
     id={list.id}
-    level={level}
   >
     {list.children.map((item) => (
       <li role="menuitem" key={item.id}>
