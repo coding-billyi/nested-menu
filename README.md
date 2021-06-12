@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Code test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+https://coding-billyi.github.io/nested-menu/
 
-In the project directory, you can run:
+- [React.js](https://reactjs.org/)
+- [Emotion.js](https://emotion.sh/docs/introduction)
+- [Jest](https://jestjs.io/)
+- [Testing Library](https://testing-library.com/)
+- [Typescript](https://www.typescriptlang.org/)
 
-### `yarn start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Prerequisites
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Git
+- Node: 14.16.0 or greater
+- NPM: 6.14.0 or greater
 
-### `yarn test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. `yarn prepare` to install [husky](https://typicode.github.io/husky/#/)
+2. `yarn install` to install the website's npm dependencies
 
-### `yarn build`
+### Running locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. `yarn start` to start the hot-reloading development server and run jest test in watch mode
+2. open http://localhost:8080 to open the site in your favorite browser
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Tool: Webpack, Webpack Dev Server, Jest
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Running the tests
 
-### `yarn eject`
+### Lint
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`yarn format` to format the code automatically. The format command will be triggered by [husky](https://typicode.github.io/husky/#/) at pre-commit phase
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Tool: ESLint, Prettier
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Test
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`yarn test` to run unit test & integration test
 
-## Learn More
+- Tool: Jest, @testing-library/react , @testing-library/react-hooks, [msw](https://mswjs.io/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Jest Test Coverage: 100%
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![alt text](./coverage.png)
+
+##### Issues
+
+- @testing-library/user-event userEvent.type() issues with dynamic form field testing for controlled form state update
+- @testing-library/react screen.getByRole('menu', { name:/laundry/i }) not work
